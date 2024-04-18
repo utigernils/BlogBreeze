@@ -7,6 +7,7 @@ BlogBreeze is a simple blogging platform where users can post anything they like
 - **Easy Posting**: Write and publish blog posts effortlessly.
 - **Customizable**: Utilizes Bootstrap for easy customization of the look and feel.
 - **Open for Contributions**: Anyone is welcome to contribute to the project in any way they see fit.
+[try it here](https://blogbreeze.utigernils.ch/)
 
 ## Getting Started
 
