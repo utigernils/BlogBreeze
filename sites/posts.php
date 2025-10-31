@@ -10,6 +10,7 @@
     require("../php/getPosts.php");
     require("../php/makeReaction.php");
     require("components/header.php");
+    require("components/footer.php");
     ?>
     <script src="../bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -113,9 +114,7 @@
                 </div>
             <?php endforeach; ?>
 
-            <footer class="mt-5 text-white-50 text-center">
-                <p>Projekt von Nils Utiger</p>
-            </footer>
+            <?php renderFooter(); ?>
 
     </div>
 </body>

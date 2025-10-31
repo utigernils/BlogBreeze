@@ -9,6 +9,7 @@
     <?php
     require("../php/makePost.php");
     require("components/header.php");
+    require("components/footer.php");
     require("components/protect.php");
     ?>
 </head>
@@ -36,9 +37,7 @@
                 </form>
             </div>
         </main>
-        <footer class="mt-auto text-center text-white-50">
-            <p>Projekt von Nils Utiger</p>
-        </footer>
+        <?php renderFooter(); ?>
     </div>
 </body>
 

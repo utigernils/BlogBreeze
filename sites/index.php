@@ -10,6 +10,7 @@
     <link href="../styles/index_style.css" rel="stylesheet" />
     <?php
     require("components/header.php");
+    require("components/footer.php");
     ?>
   </head>
   <body class="d-flex h-100 text-center text-dark bg-dark">
@@ -27,9 +28,7 @@
           >
         </p>
       </main>
-      <footer class="mt-auto text-white-50">
-        <p>Projekt von Nils Utiger</p>
-      </footer>
+      <?php renderFooter(); ?>
     </div>
   </body>
 </html>

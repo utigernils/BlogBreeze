@@ -9,6 +9,7 @@
     <?php
     require("../php/loginhandler.php");
     require("components/header.php");
+    require("components/footer.php");
     if (isloggedin()) {
         header('Location: profile.php');
     }
@@ -71,9 +72,7 @@
                 Konto erstellen
             </button>
         </main>
-        <footer class="mt-auto text-center text-white-50">
-            <p>Projekt von Nils Utiger</p>
-        </footer>
+        <?php renderFooter(); ?>
     </div>
 </body>
 
