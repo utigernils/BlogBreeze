@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <title>BlogBreeze - Posts</title>
-    <link href="../bootstrap-5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bootstrap-5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../styles/posts_style.css" rel="stylesheet">
     <?php
     require("../php/getOtherPosts.php");
     ?>
-    <script src="../bootstrap-5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body class="d-flex h-auto text-left text-dark bg-dark">
