@@ -123,12 +123,6 @@
                     </div>
                 </div>
             <?php endforeach; ?>
-            <div class="w-100 d-flex justify-content-center">
-                <a class="btn btn-lg w-50 btn-dark me-3 mt-1 mb-1"  href="other_posts.php">Beiträge von anderen Seiten
-                    anschauen</a>
-                <a class="btn btn-lg w-50 btn-dark ms-3 mt-1 mb-1" href="../php/api.php">Diese Beiträge per API
-                    anschauen</a>
-            </div>
 
             <footer class="mt-5 text-white-50 text-center">
                 <p>Projekt von Nils Utiger</p>
