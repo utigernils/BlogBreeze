@@ -11,26 +11,15 @@
     require("../php/getPosts.php");
     require("../php/deletePost.php");
     require("../php/getUserData.php");
+    require("components/header.php");
+    require("components/footer.php");
+    require("components/protect.php");
     ?>
-    <?php
-    if (!isloggedin()) {
-        header('Location: login.php');
-    } ?>
 </head>
 
 <body class="d-flex text-left text-dark bg-dark">
     <div class="cover-container d-flex w-100 p-3 mx-auto flex-column">
-        <header class="mb-auto">
-            <div>
-                <h3 class="float-md-start mb-0">BlogBreeze</h3>
-                <nav class="nav nav-masthead justify-content-center float-md-end">
-                    <a class="nav-link fw-bold py-1 px-0 " href="../index.html">Wilkommen</a>
-                    <a class="nav-link fw-bold py-1 px-0 " href="posts.php">Beiträge</a>
-                    <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="profile.php">MyBlogBreeze</a>
-                    <a class="nav-link fw-bold py-1 px-0" href="other_blogs.php">Weitere Blogseiten</a>
-                </nav>
-            </div>
-        </header>
+        <?php renderHeader('profile.php'); ?>
         <?php if (isloggedin()): ?>
             <main class="px-3 text-dark">
                 <h1 class="mb-4">MyBlogBreeze</h1>
@@ -50,9 +39,7 @@
                 </div>
             </main>
         <?php endif; ?>
-        <footer class="mt-auto text-center text-white-50">
-            <p>Projekt von Nils Utiger</p>
-        </footer>
+        <?php renderFooter(); ?>
     </div>
 </body>
 
