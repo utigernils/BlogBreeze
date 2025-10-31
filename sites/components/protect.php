@@ -1,6 +1,6 @@
 <?php
 if (!isloggedin()) {
-    $redirect = $_SERVER['REQUEST_URI'];
+    $redirect = basename($_SERVER['PHP_SELF']);
     header("Location: login.php?redirect=$redirect");
     exit();
 }
