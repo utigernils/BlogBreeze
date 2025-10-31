@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # PHP Apache Service
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: blogbreeze_web
+    ports:
+      - "8080:80"
+    volumes:
+      # Mount the entire project for live reload
+      - .:/var/www/html
+    environment:
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME:-blogbreeze}
+      - DB_USER=${DB_USER:-blogbreeze_user}
+      - DB_PASS=${DB_PASS:-blogbreeze_pass}
+    depends_on:
+      - db
+    networks:
+      - blogbreeze_network
+    restart: unless-stopped
+
+  # MariaDB Database Service
+  db:
+    image: mariadb:11.2
+    container_name: blogbreeze_db
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS:-root_password}
+      - MYSQL_DATABASE=${DB_NAME:-blogbreeze}
+      - MYSQL_USER=${DB_USER:-blogbreeze_user}
+      - MYSQL_PASSWORD=${DB_PASS:-blogbreeze_pass}
+    volumes:
+      # Persist database data
+      - db_data:/var/lib/mysql
+      # Initialize database with SQL file if it exists
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - blogbreeze_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PHPMyAdmin for database management (optional, for development)
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: blogbreeze_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=${DB_USER:-blogbreeze_user}
+      - PMA_PASSWORD=${DB_PASS:-blogbreeze_pass}
+    depends_on:
+      - db
+    networks:
+      - blogbreeze_network
+    restart: unless-stopped
+
+networks:
+  blogbreeze_network:
+    driver: bridge
+
+volumes:
+  db_data:

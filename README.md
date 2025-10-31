@@ -20,9 +20,29 @@ To set up BlogBreeze on your local machine, follow these steps:
     git clone https://github.com/your-username/BlogBreeze.git
     ```
 
-2. Ensure you have Bootstrap installed. If not, you can download it from the [Bootstrap website](https://getbootstrap.com/).
+2. **Configure the database:**
 
-3. Navigate to the `index.php` file and open it in your preferred browser.
+    ```bash
+    # Copy the environment template
+    cp .env.example .env
+    
+    # Edit .env with your database credentials
+    nano .env
+    ```
+    
+    Set the following values in your `.env` file:
+    ```
+    DB_HOST=localhost
+    DB_NAME=your_database_name
+    DB_USER=your_username
+    DB_PASS=your_password
+    ```
+    
+    For detailed database setup instructions, see [DATABASE_CONFIG.md](DATABASE_CONFIG.md).
+
+3. Ensure you have Bootstrap installed. If not, you can download it from the [Bootstrap website](https://getbootstrap.com/).
+
+4. Navigate to the `index.php` file and open it in your preferred browser.
 
 ## Contributing
 
