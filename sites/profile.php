@@ -12,11 +12,8 @@
     require("../php/deletePost.php");
     require("../php/getUserData.php");
     require("components/header.php");
+    require("components/protect.php");
     ?>
-    <?php
-    if (!isloggedin()) {
-        header('Location: login.php');
-    } ?>
 </head>
 
 <body class="d-flex text-left text-dark bg-dark">
