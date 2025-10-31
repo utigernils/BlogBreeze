@@ -9,6 +9,7 @@
     <?php
     require("../php/getPosts.php");
     require("../php/makeReaction.php");
+    require("components/header.php");
     ?>
     <script src="../bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -16,19 +17,7 @@
 <body class="d-flex h-auto text-left text-dark bg-dark">
     </div>
     <div class="container-fluid d-flex w-75 min-vh-100 pt-0 pb-3 px-3 mx-auto flex-column">
-        <div class="cover-container d-flex w-100 h-25 p-3 mx-auto flex-column">
-            <header class="mb-auto">
-                <div>
-                    <h3 class="float-md-start mb-0">BlogBreeze</h3>
-                    <nav class="nav nav-masthead justify-content-center float-md-end">
-                        <a class="nav-link fw-bold py-1 px-0" href="../index.html">Wilkommen</a>
-                        <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="posts.php">Beiträge</a>
-                        <a class="nav-link fw-bold py-1 px-0" href="profile.php">MyBlogBreeze</a>
-                        <a class="nav-link fw-bold py-1 px-0" href="other_blogs.php">Weitere Blogseiten</a>
-                    </nav>
-                </div>
-        </div>
-        </header>
+        <?php renderHeader('posts.php'); ?>
         <a class="btn btn-lg btn-dark mt-5 mb-5 fw-bold" href="posts_write.php">Beitrag schreiben</a>
         <main>
             <?php foreach ($postsData as $post): ?>

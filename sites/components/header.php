@@ -2,7 +2,7 @@
 
 function getPages() {
     return [
-        'index.html' => 'Willkommen',
+        'index.php' => 'Willkommen',
         'posts.php' => 'Beiträge',
         'profile.php' => 'MyBlogBreeze',
     ];
