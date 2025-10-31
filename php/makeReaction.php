@@ -1,47 +1,28 @@
 <?php
+require_once __DIR__ . '/DBConnector.php';
 require('loginhandler.php');
 $username = getUser();
 
-function connectToDatabase() {
-    $servername = "xxx";
-    $db_username = "xxx";
-    $db_password = "xxx";
-    $dbname = "xxx";
-
-    $conn = new mysqli($servername, $db_username, $db_password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    return $conn;
-}
-
 function updateLikes($id) {
-    $conn = connectToDatabase();
+    $pdo = getDB();
     
-    $check_likes = "SELECT * FROM post_reactions WHERE post_id = ? AND action = 'like'";
-    $checkl_stmt = $conn->prepare($check_likes);
-    $checkl_stmt->bind_param("i", $id);
-    $checkl_stmt->execute();
-    $checkl_result = $checkl_stmt->get_result();
+    $check_likes = "SELECT COUNT(*) as count FROM post_reactions WHERE post_id = ? AND action = 'like'";
+    $checkl_stmt = $pdo->prepare($check_likes);
+    $checkl_stmt->execute([$id]);
+    $likes = $checkl_stmt->fetch()['count'];
     
-    $check_dislikes = "SELECT * FROM post_reactions WHERE post_id = ? AND action = 'dislike'";
-    $checkd_stmt = $conn->prepare($check_dislikes);
-    $checkd_stmt->bind_param("i", $id);
-    $checkd_stmt->execute();
-    $checkd_result = $checkd_stmt->get_result();
-
-    $likes = $checkl_result->num_rows; 
-    $dislikes = $checkd_result->num_rows; 
+    $check_dislikes = "SELECT COUNT(*) as count FROM post_reactions WHERE post_id = ? AND action = 'dislike'";
+    $checkd_stmt = $pdo->prepare($check_dislikes);
+    $checkd_stmt->execute([$id]);
+    $dislikes = $checkd_stmt->fetch()['count'];
     
-    $save_likes = "UPDATE posts SET post_likes=$likes WHERE id=$id";
-    $insert_likes = $conn->prepare($save_likes);
-    $insert_likes->execute();
+    $save_likes = "UPDATE posts SET post_likes = ? WHERE id = ?";
+    $insert_likes = $pdo->prepare($save_likes);
+    $insert_likes->execute([$likes, $id]);
     
-    $save_dislikes = "UPDATE posts SET post_dislikes=$dislikes WHERE id=$id";
-    $insert_dislikes = $conn->prepare($save_dislikes);
-    $insert_dislikes->execute();
+    $save_dislikes = "UPDATE posts SET post_dislikes = ? WHERE id = ?";
+    $insert_dislikes = $pdo->prepare($save_dislikes);
+    $insert_dislikes->execute([$dislikes, $id]);
 
     header("location: ../sites/posts.php"); 
     
@@ -53,41 +34,34 @@ function handleReaction($post_id, $username, $action) {
         header("location: ../sites/login.php?redirect=posts.php");
     }
 
-
-    $conn = connectToDatabase();
+    $pdo = getDB();
 
     $check_query = "SELECT * FROM post_reactions WHERE post_id = ? AND user_name = ?";
-    $check_stmt = $conn->prepare($check_query);
-    $check_stmt->bind_param("is", $post_id, $username);
-    $check_stmt->execute();
-    $check_result = $check_stmt->get_result();
+    $check_stmt = $pdo->prepare($check_query);
+    $check_stmt->execute([$post_id, $username]);
+    $check_result = $check_stmt->fetchAll();
 
     $check_action = "SELECT * FROM post_reactions WHERE post_id = ? AND user_name = ? AND action = ?";
-    $checka_stmt = $conn->prepare($check_action);
-    $checka_stmt->bind_param("iss", $post_id, $username, $action);
-    $checka_stmt->execute();
-    $checka_result = $checka_stmt->get_result();
+    $checka_stmt = $pdo->prepare($check_action);
+    $checka_stmt->execute([$post_id, $username, $action]);
+    $checka_result = $checka_stmt->fetchAll();
 
-    if ($check_result->num_rows == 0) {
+    if (count($check_result) == 0) {
         $insert_query = "INSERT INTO post_reactions (post_id, user_name, action) VALUES (?, ?, ?)";
-        $insert_stmt = $conn->prepare($insert_query);
-        $insert_stmt->bind_param("iss", $post_id, $username, $action);
-        $insert_stmt->execute();
+        $insert_stmt = $pdo->prepare($insert_query);
+        $insert_stmt->execute([$post_id, $username, $action]);
     } else {
-        if ($checka_result->num_rows == 1) {
+        if (count($checka_result) == 1) {
             $delete_query = "DELETE FROM post_reactions WHERE post_id = ? AND user_name = ?";
-            $delete_stmt = $conn->prepare($delete_query);
-            $delete_stmt->bind_param("is", $post_id, $username);
-            $delete_stmt->execute();
+            $delete_stmt = $pdo->prepare($delete_query);
+            $delete_stmt->execute([$post_id, $username]);
         } else {
             $delete_query = "DELETE FROM post_reactions WHERE post_id = ? AND user_name = ?";
-            $delete_stmt = $conn->prepare($delete_query);
-            $delete_stmt->bind_param("is", $post_id, $username);
-            $delete_stmt->execute();
+            $delete_stmt = $pdo->prepare($delete_query);
+            $delete_stmt->execute([$post_id, $username]);
             $insert_query = "INSERT INTO post_reactions (post_id, user_name, action) VALUES (?, ?, ?)";
-            $insert_stmt = $conn->prepare($insert_query);
-            $insert_stmt->bind_param("iss", $post_id, $username, $action);
-            $insert_stmt->execute();
+            $insert_stmt = $pdo->prepare($insert_query);
+            $insert_stmt->execute([$post_id, $username, $action]);
         }
 
     }
@@ -99,15 +73,14 @@ function handleReaction($post_id, $username, $action) {
 function getLikeState($id) {
     $username = getUser();
 
-    $conn = connectToDatabase();
+    $pdo = getDB();
 
     $check_action = "SELECT * FROM post_reactions WHERE post_id = ? AND user_name = ? AND action = 'like'";
-    $checka_stmt = $conn->prepare($check_action);
-    $checka_stmt->bind_param("is", $id, $username);
-    $checka_stmt->execute();
-    $checka_result = $checka_stmt->get_result();
+    $checka_stmt = $pdo->prepare($check_action);
+    $checka_stmt->execute([$id, $username]);
+    $checka_result = $checka_stmt->fetchAll();
 
-    if ($checka_result->num_rows == 1) {
+    if (count($checka_result) == 1) {
         return true;
     } else {
         return false;
@@ -117,15 +90,14 @@ function getLikeState($id) {
 function getDislikeState($id) {
     $username = getUser();
 
-    $conn = connectToDatabase();
+    $pdo = getDB();
 
     $check_action = "SELECT * FROM post_reactions WHERE post_id = ? AND user_name = ? AND action = 'dislike'";
-    $checka_stmt = $conn->prepare($check_action);
-    $checka_stmt->bind_param("is", $id, $username);
-    $checka_stmt->execute();
-    $checka_result = $checka_stmt->get_result();
+    $checka_stmt = $pdo->prepare($check_action);
+    $checka_stmt->execute([$id, $username]);
+    $checka_result = $checka_stmt->fetchAll();
 
-    if ($checka_result->num_rows == 1) {
+    if (count($checka_result) == 1) {
         return true;
     } else {
         return false;

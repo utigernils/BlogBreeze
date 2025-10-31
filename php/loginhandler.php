@@ -1,13 +1,9 @@
 <?php
 session_start();
 
-$host = 'xxx';
-$dbname = 'xxx';
-$username = 'xxx';
-$password = 'xxx';
+require_once __DIR__ . '/DBConnector.php';
 
-$pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$pdo = getDB();
 
 function isloggedin() {
     return isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true;
