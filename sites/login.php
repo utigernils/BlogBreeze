@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>BlogBreeze - Login</title>
-    <link href="../bootstrap-5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../styles/standart_style.css" rel="stylesheet" />
     <?php
     require("../php/loginhandler.php");

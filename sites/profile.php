@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <title>BlogBreeze - MyBlogBreeze</title>
-    <link href="../bootstrap-5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../styles/standart_style.css" rel="stylesheet" />
-    <script src="../bootstrap-5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
     <?php
     require("../php/getPosts.php");
     require("../php/deletePost.php");
