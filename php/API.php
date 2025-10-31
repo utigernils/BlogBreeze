@@ -1,11 +1,7 @@
 <?php
-$host = 'xxx';
-$dbname = 'xxx';
-$username = 'xxx';
-$password = 'xxx';
+require_once __DIR__ . '/DBConnector.php';
 
-$pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$pdo = getDB();
 
 $stmt = $pdo->query('SELECT * FROM `posts`');
 $postsData = $stmt->fetchAll(PDO::FETCH_ASSOC); 

@@ -1,0 +1,13 @@
+.env
+
+# Docker volumes and data
+docker/data/
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

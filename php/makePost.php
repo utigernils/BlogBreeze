@@ -1,16 +1,9 @@
 <?php
-$host = 'xxx';
-$dbname = 'xxx';
-$username = 'xxx';
-$password = 'xxx';
-
-
-
+require_once __DIR__ . '/DBConnector.php';
 require("../php/loginhandler.php");
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo = getDB();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $title = htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8');

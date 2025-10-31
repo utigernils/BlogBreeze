@@ -1,17 +1,10 @@
 <?php
-$host = 'xxx';
-$dbname = 'xxx';
-$username = 'xxx';
-$password = 'xxx';
-
-
-
+require_once __DIR__ . '/DBConnector.php';
 require("../php/loginhandler.php");
 
 if (isloggedin()) {
     try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo = getDB();
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $comment = htmlspecialchars($_POST["comment"], ENT_QUOTES, 'UTF-8');
