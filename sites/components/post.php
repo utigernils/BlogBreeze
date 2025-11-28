@@ -49,18 +49,27 @@ function renderPost($post, $pdo)
                     </h2>
                     <div id="collapse<?php echo $post['id']; ?>" class="accordion-collapse collapse"
                         data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <?php foreach ($commentsData as $comment): ?>
-                                <?php renderComment($comment); ?>
-                            <?php endforeach; ?>
+                        <div class="accordion-body" style="background-color: #212529; padding: 1rem;">
+                            <?php if (count($commentsData) > 0): ?>
+                                <div class="mb-3">
+                                    <?php foreach ($commentsData as $comment): ?>
+                                        <?php renderComment($comment); ?>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php else: ?>
+                                <div class="text-center text-secondary mb-3 p-3">
+                                    <p class="mb-0">Noch keine Kommentare. Sei der Erste!</p>
+                                </div>
+                            <?php endif; ?>
 
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <form class="w-50" data-bs-theme="light" action='../php/makeComment.php' method='post'>
-                                    <div class="d-flex flex-row mb-3">
-                                        <input type="text" class="form-control" id="comment" name="comment" required>
+                            <div class="border-top border-secondary pt-3">
+                                <form action='../php/makeComment.php' method='post'>
+                                    <div class="d-flex gap-2">
+                                        <input type="text" class="form-control bg-dark text-light border-secondary" 
+                                            id="comment" name="comment" placeholder="Schreibe einen Kommentar..." required>
                                         <input type="hidden" class="form-control" id="post_id" name="post_id"
                                             value="<?php echo $post['id']; ?>" required>
-                                        <button name="push" type="submit" class="btn btn-dark fw-bold">Kommentieren</button>
+                                        <button name="push" type="submit" class="btn btn-light fw-bold" style="white-space: nowrap;">Kommentieren</button>
                                     </div>
                                 </form>
                             </div>
