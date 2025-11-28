@@ -28,10 +28,13 @@ function renderPost($post, $pdo)
                 <h2 class="mb-2"><?= $post["post_title"] ?></h2>
                 <p class="mb-0"><?= $post["post_text"] ?></p>
             </div>
-            <div class="border border-secondary rounded"
-                style="background-color: #212529; padding: 0; overflow: hidden; flex: 0 0 35%; max-width: 35%;">
-                <img src="<?= $post["picture_url"] ?>" alt="Post Image" style="width:100%; height:auto; display:block;">
-            </div>
+
+            <?php if (!empty($post['picture_url'])): ?>
+                        <div class="border border-secondary rounded"
+                            style="background-color: #212529; padding: 0; overflow: hidden; flex: 0 0 35%; max-width: 35%;">
+                            <img src="<?= htmlspecialchars($post['picture_url'], ENT_QUOTES, 'UTF-8') ?>" alt="Post Image" style="width:100%; height:auto; display:block;">
+                        </div>
+            <?php endif; ?>
         </div>
 
         <div class="d-flex justify-content-between align-items-start" style="background-color: #212529;">
